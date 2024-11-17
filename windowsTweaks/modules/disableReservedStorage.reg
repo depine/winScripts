@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager]
+"MiscPolicyInfo"=dword:00000002
+"PassedPolicy"=dword:00000000
+"ShippedWithReserves"=dword:00000000
