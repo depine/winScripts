@@ -1,6 +1,6 @@
 @echo off
-
-echo Removendo aplicativos da Loja...
+echo.
+echo Removendo Apps da Loja...
 REM Para listar os recursos opcionais e adaptar o script: Get-AppxPackage | Select Name, PackageFullName
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *549981C3F5F10* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *Appconnector* | Remove-AppxPackage"
@@ -39,7 +39,6 @@ powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *ZuneMusi
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *ZuneVideo* | Remove-AppxPackage"
 echo concluido!
 echo.
-
 echo Removendo componentes opcionais do Windows (Painel de Controle)...
 REM Para listar os recursos opcionais e adaptar o script: dism /Online /Get-Capabilities
 dism /Online /Remove-Capability /CapabilityName:App.StepsRecorder~~~~0.0.1.0 /NoRestart
@@ -60,20 +59,19 @@ dism /Online /Remove-Capability /CapabilityName:OneCoreUAP.OneSync~~~~0.0.1.0 /N
 dism /Online /Remove-Capability /CapabilityName:OpenSSH.Client~~~~0.0.1.0 /NoRestart
 dism /Online /Remove-Capability /CapabilityName:Print.Fax.Scan~~~~0.0.1.0 /NoRestart
 dism /Online /Remove-Capability /CapabilityName:Print.Management.Console~~~~0.0.1.0 /NoRestart
-REM dism /Online /Remove-Capability /CapabilityName:Windows.Client.ShellComponents~~~~0.0.1.0 /NoRestart
+dism /Online /Remove-Capability /CapabilityName:Windows.Client.ShellComponents~~~~0.0.1.0 /NoRestart
 echo Concluido!
 echo.
-
 echo Removendo componentes opcionais do Windows (Configuracoes)...
 REM Para listar os recursos opcionais e adaptar o script: Get-WindowsOptionalFeature -Online
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WCF-Services45' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WCF-TCP-PortSharing45' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'MediaPlayback' -Online -NoRestart"
-REM powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WindowsMediaPlayer' -Online -NoRestart"
+powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WindowsMediaPlayer' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'SmbDirect' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Printing-PrintToPDFServices-Features' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Printing-XPSServices-Features' -Online -NoRestart"
-powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'SearchEngine-Client-Package' -Online -NoRestart"
+REM powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'SearchEngine-Client-Package' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'MSRDC-Infrastructure' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WorkFolders-Client' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Printing-Foundation-Features' -Online -NoRestart"
@@ -81,10 +79,9 @@ powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -Fea
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'MicrosoftWindowsPowerShellV2Root' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'MicrosoftWindowsPowerShellV2' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'NetFx4-AdvSrvs' -Online -NoRestart"
-REM powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Internet-Explorer-Optional-amd64' -Online -NoRestart"
+powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Internet-Explorer-Optional-amd64' -Online -NoRestart"
 echo concluido!
 echo.
-
 echo Desinstalando Microsoft OneDrive...
 taskkill /f /im OneDrive.exe >nul 2>&1
 IF EXIST %SystemRoot%\SysWOW64\OneDriveSetup.exe %SystemRoot%\SysWOW64\OneDriveSetup.exe /uninstall >nul 2>&1

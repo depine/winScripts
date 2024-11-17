@@ -108,14 +108,14 @@ echo.
 
 :: Função: removeComponents
 :askUser
-set /p userInput="Deseja remover componentes opcionais do Windows e Apps da Windows Store? (S/N): "
+set /p userInput="Remover Apps da Microsoft Store e componentes opcionais do Windows? (S/N): "
 if /i "%userInput%"=="S" goto removeComponents
 if /i "%userInput%"=="N" goto restartComputer
 echo Entrada invalida.
 goto askUser
 
 :removeComponents
-echo Removendo componentes opcionais e App da Loja...
+echo Removendo App da Loja e componentes opcionais...
 call %~dp0.\tools\removeOptionalAndStoreApps.bat
 echo Concluido!
 echo.
