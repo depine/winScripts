@@ -1,14 +1,13 @@
 @echo off
-setlocal enabledelayedexpansion
 REM Necessario executar como administrador
 
 echo Limpando arquivos temporarios...
 del /s /f /q "%tmp%\*" >nul 2>&1
 rd /s /q "%tmp%" >nul 2>&1
-del /s /f /q "C:\Windows\Temp\*" >nul 2>&1
-rd /s /q "C:\Windows\Temp" >nul 2>&1
-del /s /f /q "C:\Windows\Prefetch\*" >nul 2>&1
-rd /s /q "C:\Windows\Prefetch" >nul 2>&1
+del /s /f /q "%windir%\Temp\*" >nul 2>&1
+rd /s /q "%windir%\Temp" >nul 2>&1
+del /s /f /q "%windir%\Prefetch\*" >nul 2>&1
+rd /s /q "%windir%\Prefetch" >nul 2>&1
 echo Concluido!
 echo.
 
