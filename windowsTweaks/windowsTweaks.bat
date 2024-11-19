@@ -12,9 +12,11 @@ if %errorlevel% NEQ 0 (
 :: SISTEMA
 echo Ativando Windows Photo Viewer...
 regedit /s "%~dp0.\modules\restorePhotoViewer.reg" >nul 2>&1
+
 echo Desativando Armazenamento Reservado...
-DISM /Online /Get-ReservedStorageState
-DISM /Online /Set-ReservedStorageState /State:Disabled
+DISM /Online /Get-ReservedStorageState >nul 2>&1
+DISM /Online /Set-ReservedStorageState /State:Disabled >nul 2>&1
+REM Mesma alteração via registro:
 REM REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager" /v ShippedWithReserves /t REG_DWORD /d 0 /f >nul 2>&1
 
 echo Desativando Prefetch...
