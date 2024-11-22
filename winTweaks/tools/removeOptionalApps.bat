@@ -1,5 +1,5 @@
 @echo off
-
+echo.
 echo Removendo componentes opcionais do Windows (Painel de Controle)
 REM Para listar os recursos opcionais e adaptar o script: dism /Online /Get-Capabilities
 dism /Online /Remove-Capability /CapabilityName:App.StepsRecorder~~~~0.0.1.0 /NoRestart
@@ -24,7 +24,7 @@ REM dism /Online /Remove-Capability /CapabilityName:Windows.Client.ShellComponen
 echo Concluido!
 echo.
 
-echo Removendo componentes opcionais do Windows (Configurações)
+echo Removendo componentes opcionais do Windows (Configuracoes)
 REM Para listar os recursos opcionais e adaptar o script: Get-WindowsOptionalFeature -Online
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WCF-Services45' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WCF-TCP-PortSharing45' -Online -NoRestart"
@@ -68,7 +68,5 @@ If /I "%Reiniciar%"=="S" (
     echo Reinicie o computador para aplicar as alteracoes!
 )
 
+echo concluido!
 echo.
-echo.
-pause
-exit
