@@ -1,5 +1,5 @@
 @echo off
-REM Script para ajustes diversos no Windows 10
+REM Script para ajustes diversos no Windows
 
 REM Solicita permissao de administrador
 :: BatchGotAdmin        
