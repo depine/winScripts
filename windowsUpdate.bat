@@ -4,18 +4,29 @@ REM Ativa atualização automática dos Apps da Windows Store
 REM Instala atualizações do Windows Update
 REM Instala o Winget e atualiza demais aplicativos
 REM
-REM Após as atualizações concluídas pergunta se deseja alterar o Hostname do computador
 REM
 REM Escrito por Gian Depiné (depine@gmail.com)
 REM em 17 de novembro de 2024
 
-REM Verifica se o script está sendo executado como administrador
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    echo Por favor, execute este script como Administrador.
-    pause
-    exit /b
-)
+echo ATENCAO!!!
+echo ==========
+echo.
+echo ESTE SCRIPT VAI REINICIAR O COMPUTADOR AUTOMATICAMENTE DURANTE AS ATUALIZACOES
+echo SALVE E FECHE QUALQUER TRABALHO QUE TENHA ABERTO ANTES DE PROSSEGUIR
+echo EXECUTE O SCRIPT NOVAMENTE ATE INSTALAR TODAS AS ATUALIZACOES DISPONIVEIS
+echo.
+pause
+
+REM Solicita permissao de administrador
+:: BatchGotAdmin        
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"  
+if '%errorlevel%' NEQ '0' (    echo Verificando persmissao de administrador...    goto UACPrompt) else ( goto gotAdmin )  
+:UACPrompt  
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"  
+    echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"  
+    "%temp%\getadmin.vbs"  
+    exit /B
+:gotAdmin  
 
 echo Ativando atualizacoes da Windows Store...
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /f  >nul 2>&1 ; Criar chave de registro usada abaixo
@@ -79,7 +90,8 @@ If "%HN:~,1%"=="." (
     GoTo AskHN
 )
 
-WMIC ComputerSystem Where Name="%ComputerName%" Call Rename "%HN%" >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Rename-Computer -NewName %HN%"
+echo.
 
 
 :: Funcao Reiniciar Computador
