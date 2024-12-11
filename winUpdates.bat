@@ -11,9 +11,7 @@ REM Atualizado em 22/11/2024
 echo ATENCAO!!!
 echo ==========
 echo.
-echo ESTE SCRIPT VAI REINICIAR O COMPUTADOR AUTOMATICAMENTE DURANTE AS ATUALIZACOES
-echo SALVE E FECHE QUALQUER TRABALHO QUE TENHA ABERTO ANTES DE PROSSEGUIR
-echo EXECUTE O SCRIPT NOVAMENTE ATE INSTALAR TODAS AS ATUALIZACOES DISPONIVEIS
+echo ESTE SCRIPT VAI REINICIAR SEU COMPUTADOR AUTOMATICAMENTE, SALVE SEU TRABALHO ANTES DE PROSSEGUIR...
 echo.
 pause
 echo.
@@ -27,9 +25,14 @@ if '%errorlevel%' NEQ '0' (    echo Verificando persmissao de administrador...  
     echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"  
     "%temp%\getadmin.vbs"  
     exit /B
-:gotAdmin  
+:gotAdmin
 
-echo Ativando atualizacoes da Windows Store...
+REM Remover todos Provisioned Packages para evitar bloatware em novos usuarios
+REM echo Removendo Provisioned Packages
+REM powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxProvisionedPackage -Online | Remove-AppxProvisionedPackage -AllUsers"
+REM echo.
+
+echo Reinstalando Windows Store e ativando atualizacoes...
 REM Criar chave de registro:
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /f  >nul 2>&1
 REM Definir politica de downloads automaticos da WindowsStore:

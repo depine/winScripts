@@ -1,4 +1,15 @@
 @echo off
+
+REM Solicita permissao de administrador
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"  
+if '%errorlevel%' NEQ '0' (    echo Verificando persmissao de administrador...    goto UACPrompt) else ( goto gotAdmin )  
+:UACPrompt  
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"  
+    echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"  
+    "%temp%\getadmin.vbs"  
+    exit /B
+:gotAdmin  
+
 REM Compactar a pasta WinSxS
 Dism.exe /online /Cleanup-Image /StartComponentCleanup
 
@@ -12,7 +23,7 @@ REM Compactar arquivos do sistema opercaional
 compact.exe /CompactOS:always
 
 REM Verificar e reparar arquivos do sistema
-sfc /scannow
+REM sfc /scannow
 
 REM Comprimir pasta WinSXS
 sc stop msiserver

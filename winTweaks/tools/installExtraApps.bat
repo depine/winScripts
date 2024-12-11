@@ -18,5 +18,5 @@ winget install RevoUninstaller.RevoUninstaller --silent --force --accept-package
 winget install AnyDeskSoftwareGmbH.AnyDesk --force --accept-package-agreements --accept-source-agreements --disable-interactivity
 winget upgrade --silent --force --recurse --nowarn --unknown --accept-package-agreements --accept-source-agreements --disable-interactivity
 
-echo Instalação concluída!
+echo Instalacao concluida!
 pause

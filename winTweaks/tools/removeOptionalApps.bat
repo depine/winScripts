@@ -1,4 +1,15 @@
 @echo off
+
+REM Solicita permissao de administrador
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"  
+if '%errorlevel%' NEQ '0' (    echo Verificando persmissao de administrador...    goto UACPrompt) else ( goto gotAdmin )  
+:UACPrompt  
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"  
+    echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"  
+    "%temp%\getadmin.vbs"  
+    exit /B
+:gotAdmin  
+
 echo.
 echo Removendo componentes opcionais do Windows (Painel de Controle)
 REM Para listar os recursos opcionais e adaptar o script: dism /Online /Get-Capabilities
@@ -6,8 +17,8 @@ dism /Online /Remove-Capability /CapabilityName:App.StepsRecorder~~~~0.0.1.0 /No
 dism /Online /Remove-Capability /CapabilityName:App.Support.QuickAssist~~~~0.0.1.0 /NoRestart
 dism /Online /Remove-Capability /CapabilityName:Browser.InternetExplorer~~~~0.0.11.0 /NoRestart
 dism /Online /Remove-Capability /CapabilityName:DirectX.Configuration.Database~~~~0.0.1.0 /NoRestart
-dism /Online /Remove-Capability /CapabilityName:Hello.Face.18967~~~~0.0.1.0 /NoRestart
-dism /Online /Remove-Capability /CapabilityName:Language.Language.Basic~~~pt-BR~0.0.1.0 /NoRestart
+REM dism /Online /Remove-Capability /CapabilityName:Hello.Face.18967~~~~0.0.1.0 /NoRestart
+REM dism /Online /Remove-Capability /CapabilityName:Language.Language.Basic~~~pt-BR~0.0.1.0 /NoRestart
 dism /Online /Remove-Capability /CapabilityName:Language.Handwriting~~~pt-BR~0.0.1.0 /NoRestart
 dism /Online /Remove-Capability /CapabilityName:Language.OCR~~~pt-BR~0.0.1.0 /NoRestart
 dism /Online /Remove-Capability /CapabilityName:Language.Speech~~~pt-BR~0.0.1.0 /NoRestart
@@ -27,13 +38,13 @@ echo.
 echo Removendo componentes opcionais do Windows (Configuracoes)
 REM Para listar os recursos opcionais e adaptar o script: Get-WindowsOptionalFeature -Online
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WCF-Services45' -Online -NoRestart"
-powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WCF-TCP-PortSharing45' -Online -NoRestart"
+REM powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WCF-TCP-PortSharing45' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'MediaPlayback' -Online -NoRestart"
-REM powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WindowsMediaPlayer' -Online -NoRestart"
+powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WindowsMediaPlayer' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'SmbDirect' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Printing-PrintToPDFServices-Features' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Printing-XPSServices-Features' -Online -NoRestart"
-powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'SearchEngine-Client-Package' -Online -NoRestart"
+REM powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'SearchEngine-Client-Package' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'MSRDC-Infrastructure' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'WorkFolders-Client' -Online -NoRestart"
 powershell -ExecutionPolicy Bypass -Command "Disable-WindowsOptionalFeature -FeatureName 'Printing-Foundation-Features' -Online -NoRestart"

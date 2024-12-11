@@ -1,4 +1,15 @@
 @echo off
+
+REM Solicita permissao de administrador
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"  
+if '%errorlevel%' NEQ '0' (    echo Verificando persmissao de administrador...    goto UACPrompt) else ( goto gotAdmin )  
+:UACPrompt  
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"  
+    echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"  
+    "%temp%\getadmin.vbs"  
+    exit /B
+:gotAdmin  
+
 echo.
 echo Removendo Apps da Loja...
 REM Para listar os recursos opcionais e adaptar o script: Get-AppxPackage | Select Name, PackageFullName
@@ -33,6 +44,8 @@ REM powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *Scre
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *soundrecorder* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *SkypeApp* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *Todos* | Remove-AppxPackage"
+powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *Wallet*| Remove-AppxPackage"
+powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *WebExperience*| Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *WindowsAlarms* | Remove-AppxPackage"
 REM powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *WindowsCalculator* | Remove-AppxPackage"
 REM powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *WindowsCamera* | Remove-AppxPackage"
@@ -41,9 +54,18 @@ powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *windowsc
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *WindowsFeedbackHub* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *WindowsMaps* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *WindowsSoundRecorder* | Remove-AppxPackage"
-powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *Wallet*| Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *Xbox* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *YourPhone* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *ZuneMusic* | Remove-AppxPackage"
 powershell -ExecutionPolicy Bypass -Command "Get-AppxPackage -AllUsers *ZuneVideo* | Remove-AppxPackage"
 echo concluido!
+
+
+REM Listar Provisioned Packages:
+REM Get-AppxProvisionedPackage -online | select displayname
+
+REM Remover todos Provisioned Packages:
+REM Get-AppxProvisionedPackage -Online | Remove-AppxProvisionedPackage -AllUsers
+
+REM RODAR SCRIPT WINDOWS UPDATE NOVAMENTE PRA REINSTALAR A WINDOWS STORE
+REM REINSTALAR: WindowsCalculator, ScreenSketch
