@@ -57,6 +57,7 @@ echo.
 REM Verifica se o comando winget está disponível:
 powershell -ExecutionPolicy Bypass -Command "if (-not (Get-Command winget -ErrorAction SilentlyContinue)) { irm asheroto.com/winget | iex }" >nul 2>&1
 REM Aplica atualizacoes via WinGet:
+winget pin add --id AnyDesk.AnyDesk
 winget upgrade --force --recurse --unknown --accept-package-agreements --accept-source-agreements --disable-interactivity
 echo Concluido!
 echo.
